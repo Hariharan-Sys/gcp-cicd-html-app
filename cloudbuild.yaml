@@ -13,7 +13,7 @@ steps:
       'us-central1-docker.pkg.dev/$PROJECT_ID/my-docker-repo/my-app:$COMMIT_SHA'
     ]
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
-      args:
+    args:
         [
           'compute',
           'instance-groups',
