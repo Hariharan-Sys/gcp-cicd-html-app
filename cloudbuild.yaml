@@ -1,28 +1,33 @@
 steps:
   - name: 'gcr.io/cloud-builders/docker'
-    args: [
-      'build',
-      '-t',
-      'us-central1-docker.pkg.dev/$PROJECT_ID/my-docker-repo/my-app:latest',
-      '.'
-    ]
+    args:
+      [
+        'build',
+        '-t',
+        'us-central1-docker.pkg.dev/$PROJECT_ID/my-docker-repo/my-app:latest',
+        '.'
+      ]
 
   - name: 'gcr.io/cloud-builders/docker'
-    args: [
-      'push',
-      'us-central1-docker.pkg.dev/$PROJECT_ID/my-docker-repo/my-app:latest'
-    ]
-  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     args:
-        [
-          'compute',
-          'instance-groups',
-          'managed',
-          'rolling-action',
-          'restart',
-          'html-mig',
-          '--zone=us-central1-a'
-        ]
+      [
+        'push',
+        'us-central1-docker.pkg.dev/$PROJECT_ID/my-docker-repo/my-app:latest'
+      ]
+
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: gcloud
+    args:
+      [
+        'compute',
+        'instance-groups',
+        'managed',
+        'rolling-action',
+        'restart',
+        'html-mig',
+        '--zone=us-central1-a'
+      ]
+
 images:
   - 'us-central1-docker.pkg.dev/$PROJECT_ID/my-docker-repo/my-app:latest'
 
